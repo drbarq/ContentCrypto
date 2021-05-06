@@ -16,7 +16,7 @@ const BTCPrice = (props: SidebarProps) => {
           let curRate
           let curTime
   
-          axios.get('https://rest.coinapi.io/v1/exchangerate/BTC/USD?apikey=600798C7-84CB-4842-B476-3D4427243952')
+          axios.get(`https://rest.coinapi.io/v1/exchangerate/BTC/USD?apikey=${process.env.REACT_APP_COINAPI}`)
               .then(response=> {
                   curRate = response.data.rate
                   curTime = response.data.time
