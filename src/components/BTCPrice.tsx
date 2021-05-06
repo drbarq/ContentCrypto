@@ -18,11 +18,23 @@ const BTCPrice = (props: SidebarProps) => {
 
         axios.get(`https://rest.coinapi.io/v1/exchangerate/BTC/USD?apikey=${process.env.REACT_APP_COINAPI}`)
             .then(response=> {
-                curRate = response.data.rate
+                curRate = (response.data.rate).toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                  })
                 curTime = response.data.time
+
+                let dayOfWeek = new Date(Date.parse(curTime))
+
+                console.log(dayOfWeek, "day of week")
+
+                console.log((new Date(Date.parse(curTime))).toLocaleTimeString())
+        
                 setBtcStats({curRate, curTime})
             })
     }, [refreshPrice])
+
+
   
     return (
       <>
