@@ -1,25 +1,44 @@
-import React, { useState } from 'react';
-import { Paragraph } from '@contentful/forma-36-react-components';
+import React, { useState, useEffect } from 'react';
+import { List, ListItem, Note } from '@contentful/forma-36-react-components';
 import { SidebarExtensionSDK } from '@contentful/app-sdk';
+import readingTime from 'reading-time';
 
 interface SidebarProps {
   sdk: SidebarExtensionSDK;
 }
-
-// The field ID from our blog post field
 const CONTENT_FIELD_ID = 'body';
 
 const Sidebar = (props: SidebarProps) => {
-  // The sdk allows us to interact with the Contentful web app
   const { sdk } = props;
 
-  // With the field ID we can reference individual fields from an entry
   const contentField = sdk.entry.fields[CONTENT_FIELD_ID];
 
-  // Get the current value from the blog post field and store it in React state
   const [blogText, setBlogText] = useState(contentField.getValue());
 
-  return <Paragraph>Hello Sidebar Component</Paragraph>;
+  // Listen for onChange events and update the value
+  useEffect(() => {
+    const detach = contentField.onValueChanged((value) => {
+      setBlogText(value);
+    });
+    return () => detach();
+  }, [contentField]);
+
+  // Calculate the metrics based on the new value
+  const stats = readingTime(blogText || '');
+
+  // Render the metrics with Forma36 components
+  return (
+    <>
+      <Note style={{ marginBottom: '12px' }}>
+        Metrics for your blog post:
+        <List style={{ marginTop: '12px' }}>
+          <ListItem>Word count: {stats.words}</ListItem>
+          <ListItem>Reading time: {stats.text}</ListItem>
+        </List>
+      </Note>
+    </>
+  );
 };
+
 
 export default Sidebar;
