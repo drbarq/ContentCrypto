@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { List, ListItem, Note } from '@contentful/forma-36-react-components';
 import { SidebarExtensionSDK } from '@contentful/app-sdk';
 import readingTime from 'reading-time';
+import axios from 'axios'
 
 interface SidebarProps {
   sdk: SidebarExtensionSDK;
@@ -9,6 +10,25 @@ interface SidebarProps {
 const CONTENT_FIELD_ID = 'body';
 
 const btcPrice = () => {
+    axios.get('https://rest.coinapi.io/v1/exchangerate/BTC?apikey=600798C7-84CB-4842-B476-3D4427243952')
+        .then(function (response) {
+            const curRate = response.data.rates[3326].rate
+            const curTime = response.data.rates[3326].time
+            // handle success
+            console.log("Hello");
+            console.log(response);
+            console.log(response.data.rates[3326]);
+            return {
+                curRate, curTime
+            }
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        })
+        .then(function () {
+            // always executed
+    });
 
 
 
@@ -22,7 +42,8 @@ const Sidebar = (props: SidebarProps) => {
 
   const contentField = sdk.entry.fields[CONTENT_FIELD_ID];
 
-  const [blogText, setBlogText] = useState(contentField.getValue());
+//   const [blogText, setBlogText] = useState(contentField.getValue());
+  const [btcStats, setBlogText] = useState(btcPrice());
 
   // Listen for onChange events and update the value
   useEffect(() => {
@@ -33,7 +54,9 @@ const Sidebar = (props: SidebarProps) => {
   }, [contentField]);
 
   // Calculate the metrics based on the new value
-  const stats = readingTime(blogText || '');
+//   const stats = readingTime(blogText || '');
+
+console.log( btcStats, 'btc stats')
 
   // Render the metrics with Forma36 components
   return (
