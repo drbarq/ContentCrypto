@@ -12,8 +12,6 @@ const BTCPrice = (props: SidebarProps) => {
     const [btcStats, setBtcStats] = useState({'curRate': 0, "curTime": ''});
     const [refresh, setRefresh] = useState(0)
 
-    console.log(process.env.REACT_APP_COINAPI)
-
     useEffect(() => {
         let curRate
         let curTime
@@ -24,7 +22,6 @@ const BTCPrice = (props: SidebarProps) => {
                 curTime = response.data.time
                 setBtcStats({curRate, curTime})
             })
-    // }, [btcStats])
     }, [refresh])
 
     const updatePrice = () => {
@@ -43,7 +40,7 @@ const BTCPrice = (props: SidebarProps) => {
               {btcStats.curTime}
           </List>
         </Note>
-        <Button buttonType="warning" onClick={updatePrice}>Update Price</Button>
+        <Button buttonType="warning" onClick={() => setRefresh(refresh + 1)}>Update Price</Button>
       </>
     );
   }
