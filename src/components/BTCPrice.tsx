@@ -9,6 +9,9 @@ interface SidebarProps {
 const CONTENT_FIELD_ID = 'body';
 
 const btcPrice = () => {
+
+
+
     return '$54,454'
 }
 
@@ -36,7 +39,7 @@ const Sidebar = (props: SidebarProps) => {
   return (
     <>
       <Note style={{ marginBottom: '12px' }}>
-        Metrics for your blog post:
+        Current BTC Price:
         <List style={{ marginTop: '12px' }}>
             {btcPrice()}
         </List>
