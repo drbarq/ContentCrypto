@@ -23,6 +23,8 @@ import Sidebar from './components/Sidebar';
 import Field from './components/Field';
 import Dialog from './components/Dialog';
 
+import BTCPrice from './components/BTCPrice'
+
 import LocalhostWarning from './components/LocalhostWarning';
 
 if (process.env.NODE_ENV === 'development' && window.self === window.top) {
@@ -55,7 +57,8 @@ if (process.env.NODE_ENV === 'development' && window.self === window.top) {
       },
       {
         location: locations.LOCATION_ENTRY_SIDEBAR,
-        component: <Sidebar sdk={sdk as SidebarExtensionSDK} />,
+        // component: <Sidebar sdk={sdk as SidebarExtensionSDK} />,
+        component: <BTCPrice sdk={sdk as SidebarExtensionSDK} />,
       },
       {
         location: locations.LOCATION_PAGE,
