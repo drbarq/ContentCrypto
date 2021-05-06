@@ -25,11 +25,12 @@ const BTCPrice = (props: SidebarProps) => {
                 setBtcStats({curRate, curTime})
             })
     // }, [btcStats])
-    }, [])
+    }, [refresh])
 
-
-
-
+    const updatePrice = () => {
+        let curClick = refresh
+        setRefresh(curClick + 1)
+    }
   
     return (
       <>
@@ -42,7 +43,7 @@ const BTCPrice = (props: SidebarProps) => {
               {btcStats.curTime}
           </List>
         </Note>
-        <Button buttonType="warning" >Refresh Price</Button>
+        <Button buttonType="warning" onClick={updatePrice}>Update Price</Button>
       </>
     );
   }
