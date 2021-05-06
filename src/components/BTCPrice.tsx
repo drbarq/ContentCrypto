@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { List, ListItem, Note } from '@contentful/forma-36-react-components';
+import { List, ListItem, Note, Button } from '@contentful/forma-36-react-components';
 import { SidebarExtensionSDK } from '@contentful/app-sdk';
 import readingTime from 'reading-time';
 import axios from 'axios'
@@ -9,20 +9,27 @@ interface SidebarProps {
 }
 
 const BTCPrice = (props: SidebarProps) => {
-
     const [btcStats, setBtcStats] = useState({'curRate': 0, "curTime": ''});
-  
-      useEffect(() => {
-          let curRate
-          let curTime
-  
-          axios.get(`https://rest.coinapi.io/v1/exchangerate/BTC/USD?apikey=${process.env.REACT_APP_COINAPI}`)
-              .then(response=> {
-                  curRate = response.data.rate
-                  curTime = response.data.time
-                  setBtcStats({curRate, curTime})
-              })
-      }, [btcStats])
+    const [refresh, setRefresh] = useState(0)
+
+    console.log(process.env.REACT_APP_COINAPI)
+
+    useEffect(() => {
+        let curRate
+        let curTime
+
+        axios.get(`https://rest.coinapi.io/v1/exchangerate/BTC/USD?apikey=${process.env.REACT_APP_COINAPI}`)
+            .then(response=> {
+                curRate = response.data.rate
+                curTime = response.data.time
+                setBtcStats({curRate, curTime})
+            })
+    // }, [btcStats])
+    }, [])
+
+
+
+
   
     return (
       <>
@@ -35,6 +42,7 @@ const BTCPrice = (props: SidebarProps) => {
               {btcStats.curTime}
           </List>
         </Note>
+        <Button buttonType="warning" >Refresh Price</Button>
       </>
     );
   }
