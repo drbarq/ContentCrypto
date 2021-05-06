@@ -3,6 +3,7 @@ import { List, ListItem, Note, Button } from '@contentful/forma-36-react-compone
 import { SidebarExtensionSDK } from '@contentful/app-sdk';
 import readingTime from 'reading-time';
 import axios from 'axios'
+import moment from 'moment'
 
 interface SidebarProps {
   sdk: SidebarExtensionSDK;
@@ -23,13 +24,6 @@ const BTCPrice = (props: SidebarProps) => {
                     currency: 'USD',
                   })
                 curTime = response.data.time
-
-                let dayOfWeek = new Date(Date.parse(curTime))
-
-                console.log(dayOfWeek, "day of week")
-
-                console.log((new Date(Date.parse(curTime))).toLocaleTimeString())
-        
                 setBtcStats({curRate, curTime})
             })
     }, [refreshPrice])
@@ -44,7 +38,7 @@ const BTCPrice = (props: SidebarProps) => {
               {btcStats.curRate}
           </List>
           <List style={{ marginTop: '12px' }}>
-              {btcStats.curTime}
+              {moment(btcStats.curTime).format('LLLL')}
           </List>
         </Note>
         <Button buttonType="warning" onClick={() => setRefreshPrice(refreshPrice + 1)}>Update Price</Button>
