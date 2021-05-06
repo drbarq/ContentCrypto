@@ -9,18 +9,29 @@ interface SidebarProps {
 }
 
 const BTCPrice = (props: SidebarProps) => {
-
   const [btcStats, setBtcStats] = useState({'curRate': 0, "curTime": ''});
 
     useEffect(() => {
         let curRate
         let curTime
 
-        axios.get('https://rest.coinapi.io/v1/exchangerate/BTC/USD?apikey=600798C7-84CB-4842-B476-3D4427243952')
+        // axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=BTC', {
+        axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?', {
+            headers: {
+                "X-CMC_PRO_API_KEY": `${process.env.REACT_COIN_MARKET_CAP}`,
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "application/json"
+            },    
+            params: {
+                'symbol': 'BTC'
+            }, 
+            })
             .then(response=> {
-                curRate = response.data.rate
-                curTime = response.data.time
-                setBtcStats({curRate, curTime})
+                console.log(response, "response")
+
+                // curRate = response.data.rate
+                // curTime = response.data.time
+                // setBtcStats({curRate, curTime})
             })
     }, [btcStats])
 
