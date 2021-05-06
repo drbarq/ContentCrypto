@@ -11,7 +11,6 @@ const CONTENT_FIELD_ID = 'body';
 
 
 
-
 // async function btcPrice2() {
 //     let curRate
 //     let curTime
@@ -87,15 +86,8 @@ const Sidebar = (props: SidebarProps) => {
   const contentField = sdk.entry.fields[CONTENT_FIELD_ID];
 
 //   const [blogText, setBlogText] = useState(contentField.getValue());
-  const [btcStats, setBtcStats] = useState('');
-
-  // Listen for onChange events and update the value
-//   useEffect(() => {
-//     const detach = contentField.onValueChanged((value) => {
-//         setBtcStats(value);
-//     });
-//     return () => detach();
-//   }, [contentField]);
+  const [btcStats, setBtcStats] = useState({'curRate': 0, "curTime": ''});
+//   const [btcStats, setBtcStats] = useState({});
 
     useEffect(() => {
         let curRate
@@ -105,33 +97,19 @@ const Sidebar = (props: SidebarProps) => {
             .then(response=> {
                 curRate = response.data.rate
                 curTime = response.data.time
+                setBtcStats({curRate, curTime})
             })
-   
-            //   curRate = response.data.rates[3326].rate
-            //   curTime = response.data.rates[3326].time
-            //   console.log(response);
-            console.log(curRate, "curRate")
-            console.log(curTime, "curTime")
-       
-    
-        // setBtcStats(curStats)
-        console.log(`hello, btcStats ${curRate} ${curTime}`)
-    }, [])
+    }, [btcStats])
 
-
-  // Calculate the metrics based on the new value
-//   const stats = readingTime(blogText || '');
-
-    // console.log( btcStats, 'btc stats')
-
-  // Render the metrics with Forma36 components
   return (
     <>
       <Note style={{ marginBottom: '12px' }}>
         Current BTC Price:
         <List style={{ marginTop: '12px' }}>
-            {/* {curStats} */}
-            "Hello"
+            {btcStats.curRate}
+        </List>
+        <List style={{ marginTop: '12px' }}>
+            {btcStats.curTime}
         </List>
       </Note>
     </>
