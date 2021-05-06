@@ -10,7 +10,7 @@ interface SidebarProps {
 
 const BTCPrice = (props: SidebarProps) => {
     const [btcStats, setBtcStats] = useState({'curRate': 0, "curTime": ''});
-    const [refresh, setRefresh] = useState(0)
+    const [refreshPrice, setRefreshPrice] = useState(0)
 
     useEffect(() => {
         let curRate
@@ -22,12 +22,7 @@ const BTCPrice = (props: SidebarProps) => {
                 curTime = response.data.time
                 setBtcStats({curRate, curTime})
             })
-    }, [refresh])
-
-    const updatePrice = () => {
-        let curClick = refresh
-        setRefresh(curClick + 1)
-    }
+    }, [refreshPrice])
   
     return (
       <>
@@ -40,7 +35,7 @@ const BTCPrice = (props: SidebarProps) => {
               {btcStats.curTime}
           </List>
         </Note>
-        <Button buttonType="warning" onClick={() => setRefresh(refresh + 1)}>Update Price</Button>
+        <Button buttonType="warning" onClick={() => setRefreshPrice(refreshPrice + 1)}>Update Price</Button>
       </>
     );
   }
