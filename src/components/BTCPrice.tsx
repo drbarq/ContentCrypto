@@ -16,7 +16,6 @@ const BTCPrice = (props: SidebarProps) => {
       useEffect(() => {
           let curRate
           let curTime
-  
           axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=BTC', 
             {
                 headers: {
@@ -24,10 +23,16 @@ const BTCPrice = (props: SidebarProps) => {
                     'Access-Control-Allow-Origin': "*"
                 }
             })
-              .then(response=> {
-                  curRate = response.data.rate
-                  curTime = response.data.time
-                  setBtcStats({curRate, curTime})
+              .then(response => {
+                console.log("hello")
+
+                console.log(response)
+                //   curRate = response.data.rate
+                //   curTime = response.data.time
+                //   setBtcStats({curRate, curTime})
+              })
+              .catch(error => {
+                  console.error(error)
               })
       }, [btcStats])
   
