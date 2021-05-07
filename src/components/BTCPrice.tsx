@@ -41,7 +41,7 @@ const BTCPrice = (props: SidebarProps) => {
               {moment(btcStats.curTime).format('LLLL')}
           </List>
         </Note>
-        <Button buttonType="warning" onClick={() => setRefreshPrice(refreshPrice + 1)}>Update Price</Button>
+        <Button buttonType="warning" onClick={() => setRefreshPrice(refreshPrice + 1)}>Refresh Price</Button>
       </>
     );
   }
